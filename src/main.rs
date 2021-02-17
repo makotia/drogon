@@ -1,4 +1,5 @@
-use actix_web::{ web, App, HttpResponse, HttpServer, Responder };
+use env_logger;
+use actix_web::{ web, App, HttpResponse, HttpServer, Responder, middleware::Logger };
 use serde::{ Deserialize, Serialize };
 use rand::seq::SliceRandom;
 
@@ -28,8 +29,11 @@ async fn index() -> impl Responder {
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
+    std::env::set_var("RUST_LOG", "actix_web=info");
+    env_logger::init();
     HttpServer::new(|| {
         App::new()
+            .wrap(Logger::default())
             .route("/", web::get().to(index))
     })
     .bind("127.0.0.1:8888")?

@@ -8,10 +8,6 @@ struct DrogonObj {
 }
 
 async fn index() -> impl Responder {
-    HttpResponse::Ok().body("Hello World!")
-}
-
-async fn json_response() -> impl Responder {
     let mut gen_dragon_vec = vec![
         "ド",
         "ラ",
@@ -35,7 +31,6 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .route("/", web::get().to(index))
-            .route("/json", web::get().to(json_response))
     })
     .bind("127.0.0.1:8888")?
     .run()

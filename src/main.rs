@@ -9,7 +9,7 @@ struct DrogonObj {
 }
 
 async fn index() -> impl Responder {
-    let mut gen_dragon_vec = vec![
+    let mut gen_dragon_arr = [
         "ド",
         "ラ",
         "ゴ",
@@ -19,8 +19,8 @@ async fn index() -> impl Responder {
     let mut dragon_vec = vec![];
     for _ in 0..4 {
         let mut rng = rand::thread_rng();
-        gen_dragon_vec.shuffle(&mut rng);
-        dragon_vec.push(gen_dragon_vec[0]);
+        gen_dragon_arr.shuffle(&mut rng);
+        dragon_vec.push(gen_dragon_arr[0]);
     }
     HttpResponse::Ok().json(DrogonObj {
         text: dragon_vec.join("").to_string(),
